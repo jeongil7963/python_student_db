@@ -20,10 +20,16 @@ class Student:
         self.average = ( float(mid_score_) + float(last_score_))/2
         self.grade = calculate_grade(self.average)
 
+
+    def refresh(self):
+        self.average = ( float(self.mid_score) + float(self.last_score))/2
+        self.grade = calculate_grade(self.average)
+
+
     def print(self):
-        print(str(self.idx) + ", " + self.id + ", " + self.name + ", " +
-              self.birth + ", " + self.mid_score + ", " + self.last_score +
-              ", " + str(self.average) + ", " + self.grade)
+        print("%10s %10s %10s %10s %10s %10s %10s %10s"
+                %(str(self.idx), self.id, self.name, self.birth,
+                self.mid_score, self.last_score, self.average, self.grade))
 
 
 def calculate_grade(average):
@@ -66,6 +72,7 @@ def delete_an_entry():
     if idx == 0:
         print("Input Value Error")
         return
+
     else:
         d_check = input("Do you really delete this one?(Y/N)").lower()
 
@@ -128,26 +135,34 @@ def modify_an_entry():
         if input_val == "m":
             input_mid_score_val = input("Enter mid score to modify : ")
             studentList[idx - 1].mid_score = input_mid_score_val
+            studentList[idx - 1].refresh()
         elif input_val == "f":
             input_final_score_val = input("Enter final score to modify : ")
             studentList[idx - 1].final_score = input_final_score_val
+            studentList[idx - 1].refresh()
         else:
             print("Input Value Error")
             return
 
     print("Please check the modified details")
+    print_view()
     studentList[idx - 1].print()
+
+
+def print_view():
+    print("%10s %10s %10s %10s %10s %10s %10s %10s" %("index", "Id", "Name", "Birth", "Mid Score", "Fianl Score", "Average Score", "Grade"))
 
 
 def print_the_contents_of_all_entries():
     print("Start printing the contents of all entries")
+    print_view()
     for student in studentList:
         student.print()
 
 
 def read_personal_data_from_a_file():
     print("Start reading personal data from a file")
-    file_data = input("enter the file name : ")
+    file_data = input("Enter the file name : ")
     try:
         data = open(file_data)
 
@@ -157,19 +172,19 @@ def read_personal_data_from_a_file():
                 student_val[5] = student_val[5][:-1]
                 student_object = Student(student_val[1], student_val[2], student_val[3], student_val[4], student_val[5])
                 studentList.append(student_object)
-            except ValueError:
-                pass
+            except:
+                print("Unexpected Error : ", sys.exc_info())
 
         data.close()
     except IOError:
-        print('The datafile is missing!')
+        print('The datafile is missing.')
 
 
 def sort_entries():
     print("Start sorting entries")
-    print("Choose by name(n), average(a), and grade(g)")
+    print("Choose n(name) or a(average) or g(grade")
 
-    input_val = input("Enter n or a or g")
+    input_val = input("Enter n(name) or a(average) or g(grade)").lower
 
     if input_val == "n":
         studentList.sort( key = lambda object:object.name, reverse=True)
@@ -185,6 +200,7 @@ def sort_entries():
         return
 
     print("Please check the modified details")
+    print_view()
     print_the_contents_of_all_entries()
     studentList.sort( key = lambda object:object.idx, reverse=True)
 
