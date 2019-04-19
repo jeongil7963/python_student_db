@@ -149,8 +149,3 @@ while True:
         
     elif command == "q":
         break
-
-   
-
-
-    

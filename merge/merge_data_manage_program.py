@@ -38,19 +38,21 @@ def calculate_grade(average):
     elif 60 >= average:
         return "F"
 
+
 def add_a_new_entry():
     print("Start adding a new entry")
     input_id = input("Enter student id : ")
     input_name = input("Enter student name : ")
-    input_birth = input("Enter student birth : ")
+    input_birth = input("Enter student birth(yyyy-mm-dd) : ")
     input_mid_score = input("Enter student mid score : ")
     input_final_score = input("Enter student final score : ")
 
     student_object = Student(input_id, input_name, input_birth, input_mid_score, input_final_score)
     studentList.append(student_object)
 
+
 def delete_an_entry():
-    print("Start modifying an entry")
+    print("Start deleting an entry")
     id_or_name_val = input("Enter Student Id or Name : ")
     idx = 0
 
@@ -65,12 +67,22 @@ def delete_an_entry():
         print("Input Value Error")
         return
     else:
-        studentList.pop(idx-1)
-        for num in range(idx-1, len(studentList)):
-            studentList[num].idx = num+1
+        d_check = input("Do you really delete this one?(Y/N)").lower()
 
-    global _ids
-    _ids -= 1
+        if d_check == "y":
+            studentList.pop(idx-1)
+            for num in range(idx-1, len(studentList)):
+                studentList[num].idx = num+1
+            global _ids
+            _ids -= 1
+            print("Proceed with the deletion.")
+
+        elif d_check == "n":
+            print("Cancel deletion.")
+
+        else:
+            print("Input Value Error")
+
 
 
 def find_some_item_from_entry():
@@ -108,14 +120,15 @@ def modify_an_entry():
     if idx == 0:
         print("No matching values found.")
     else:
-        print("Choose the midterm and final exam you want to correct")
+        print("Which score do you want to change?(mid_term: m, final: f)")
         input_val = input("Enter mid or final : ")
+        input_val.lower();
 
         print("Student idx : ", idx)
-        if input_val == "mid":
+        if input_val == "m":
             input_mid_score_val = input("Enter mid score to modify : ")
             studentList[idx - 1].mid_score = input_mid_score_val
-        elif input_val == "final":
+        elif input_val == "f":
             input_final_score_val = input("Enter final score to modify : ")
             studentList[idx - 1].final_score = input_final_score_val
         else:
@@ -203,6 +216,17 @@ def db_start():
     flag_quit = True
 
     while flag_quit:
+        print(" a: add a new entry\n"
+          ,"d: delete an entry\n"
+          ,"f: find some item from entry\n"
+          ,"m: modify an entry\n"
+          ,"p: print the contents of all entries\n"
+          ,"r: read personal data from a file\n"
+          ,"s: sort entries\n"
+          ,"q: quit\n"
+          ,"w: write the contents to the same files")
+
+
         input_val = input("Choose one of the options below : ")
         input_val = input_val.lower()
 
