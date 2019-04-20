@@ -27,9 +27,13 @@ class Student:
 
 
     def print(self):
-        print("%10s %10s %10s %10s %10s %10s %10s %10s"
+        print("%6s %10s %6s %12s %6s %6s %6s %6s"
                 %(str(self.idx), self.id, self.name, self.birth,
                 self.mid_score, self.last_score, self.average, self.grade))
+
+
+def print_view():
+    print("%6s %10s %9s %12s %6s %6s %6s %6s" %("index", "id", "name", "birth", "mid", "final", "avg", "grade"))
 
 
 def calculate_grade(average):
@@ -147,10 +151,6 @@ def modify_an_entry():
     print("Please check the modified details")
     print_view()
     studentList[idx - 1].print()
-
-
-def print_view():
-    print("%10s %10s %10s %10s %10s %10s %10s %10s" %("index", "Id", "Name", "Birth", "Mid Score", "Fianl Score", "Average Score", "Grade"))
 
 
 def print_the_contents_of_all_entries():
