@@ -1,3 +1,23 @@
+#=================================================#
+
+##    ##  #######  ##    ##  ######  ######## ####
+ ##  ##  ##     ## ###   ## ##    ## ##        ##
+  ####   ##     ## ####  ## ##       ##        ##
+   ##    ##     ## ## ## ##  ######  ######    ##
+   ##    ##     ## ##  ####       ## ##        ##
+   ##    ##     ## ##   ### ##    ## ##        ##
+   ##     #######  ##    ##  ######  ######## ####
+
+                     ###    ####
+                    ## ##    ##
+                   ##   ##   ##
+                  ##     ##  ##
+                  #########  ##
+                  ##     ##  ##
+                  ##     ## ####
+
+#=================================================#
+
 import re
 import sys
 
@@ -34,11 +54,13 @@ class Student:
         print("%6s %10s %6s %12s %6s %6s %6s %6s"
                 %(str(self.idx), self.id, self.name, self.birth,
                 self.mid_score, self.last_score, self.average, self.grade))
-	
-	# 객체간 동일여부를 체크하기 위해 __eq__ 함수 오버라이딩      
+
+
+	# 객체간 동일여부를 체크하기 위해 __eq__ 함수 오버라이딩
     def __eq__(self, other):
         return ( self.id , self.name, self.birth, self.mid_score, self.last_score )  == ( other.id , other.name, other.birth, other.mid_score, other.last_score )
-    
+
+
 	# set(객체)이 가능하도록 __hash__ 함수 오버라이딩
     def __hash__(self):
         return hash((self.id , self.name, self.birth, self.mid_score, self.last_score))
@@ -46,7 +68,7 @@ class Student:
 
 # 입력한 학생 정보 유효성 체크
 def regular_verification(id_, name_, birth_, mid_score_, last_score_):
-    
+
     # 점수가 100점을 넘은 경우 False return
     if ( int(mid_score_) > 100 ) or ( int(last_score_) > 100 ) :
         return False
@@ -107,7 +129,7 @@ def add_a_new_entry():
     if regular_verification(input_id, input_name, input_birth, input_mid_score, input_final_score) == False:
         print("Input Student Value Error")
         return
-    
+
     # 유효한 경우 리스트 추가
     student_object = Student(input_id, input_name, input_birth, input_mid_score, input_final_score)
     studentList.append(student_object)
@@ -144,7 +166,7 @@ def delete_an_entry():
 
             for num in range(idx-1, len(studentList)):
                 studentList[num].idx = num+1
-            
+
             global _ids
             _ids -= 1
             print("Proceed with the deletion.")
@@ -172,11 +194,11 @@ def find_some_item_from_entry():
 
         elif student.id == id_or_name_val:
             idx = student.idx
-    
+
     # index 값을 받아오지 못한 경우 메세지 출력
     if idx == 0:
         print("No matching values found.")
-    
+
     # index 값을 받아온 경우, 해당 학생의 평균과 학점 출력
     else:
         print("Print the average score and grade of a student")
@@ -184,7 +206,7 @@ def find_some_item_from_entry():
         print("Grade : ", studentList[idx - 1].grade)
 
 
-# 학생 정보 수정 기능 
+# 학생 정보 수정 기능
 def modify_an_entry():
 
     # 수정할 학생 정보 입력
@@ -204,7 +226,7 @@ def modify_an_entry():
     if idx == 0:
         print("No matching values found.")
         return
-    
+
     # index 값을 받아온 경우
     else:
 
@@ -253,7 +275,7 @@ def read_personal_data_from_a_file():
             try:
                 student_val = each_line.split("\t")
                 student_val[5] = student_val[5][:-1]
-                
+
                 # 학생 정보 값이 잘못된 경우 리스트에 추가하지 않고 다음으로 넘어감
                 if regular_verification(student_val[1], student_val[2], student_val[3], student_val[4], student_val[5]) == False:
                     continue
@@ -323,17 +345,17 @@ def write_the_contents_to_the_same_file():
     except:
         print("Unexpected Error : ", sys.exc_info())
 
-		
-# 중복되는 entry 를 삭제
 
+# 중복되는 entry 를 삭제
 def erase_duplicates():
 	global studentList
 	studentList = list(set(studentList))
 	for i,student in enumerate(studentList):
 		student.idx = i+1
 
+
 # 학생 정보 프로그램 시작
-def db_start():
+def db_starts():
     print("Start student Database Program")
     flag_quit = True
 
@@ -379,7 +401,7 @@ def db_start():
 
         elif input_val == 'w':
             write_the_contents_to_the_same_file()
-			
+
         elif input_val == 'e':
             erase_duplicates()
 
@@ -390,4 +412,5 @@ def db_start():
 if __name__ == '__main__':
 
     # 학생 정보 프로그램 시작 함수 호출
-    db_start()
+    db_starts()
+
